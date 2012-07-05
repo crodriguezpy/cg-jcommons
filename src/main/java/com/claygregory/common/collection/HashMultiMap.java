@@ -8,6 +8,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Map allowing many values per given key. This implementation wraps a basic {@link java.util.HashMap}
+ * 
+ * @author Clay Gregory
+ *
+ * @param <K> Key type
+ * @param <V> Value type
+ */
 public class HashMultiMap<K,V> implements MultiMap<K,V> {
 
 	private Map<K,List<V>> map = new HashMap<K,List<V>>( );
