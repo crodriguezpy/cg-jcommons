@@ -4,20 +4,20 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.claygregory</groupId>
-	<artifactId>cg-commons</artifactId>
+	<artifactId>cg-jcommons</artifactId>
 	<version>0.1-SNAPSHOT</version>
 	<name>cg-commons</name>
-	<url>https://github.com/claygregory/cg-commons</url>
+	<url>https://github.com/claygregory/cg-jcommons</url>
 
 	<issueManagement>
-		<url>https://github.com/claygregory/cg-commons/issues</url>
+		<url>https://github.com/claygregory/cg-jcommons/issues</url>
 		<system>GitHub Issues</system>
 	</issueManagement>
 
 	<scm>
-		<url>https://github.com/claygregory/cg-commons</url>
-		<connection>scm:git:git://github.com/claygregory/cg-commons.git</connection>
-		<developerConnection>scm:git:git@github.com:cg-commons/cg-commons.git</developerConnection>
+		<url>https://github.com/claygregory/cg-java-commons</url>
+		<connection>scm:git:git://github.com/claygregory/cg-jcommons.git</connection>
+		<developerConnection>scm:git:git@github.com:cg-commons/cg-jcommons.git</developerConnection>
 	</scm>
 
 	<developers>
