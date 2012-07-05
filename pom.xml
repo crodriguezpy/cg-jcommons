@@ -6,7 +6,7 @@
 	<groupId>com.claygregory</groupId>
 	<artifactId>cg-jcommons</artifactId>
 	<version>0.1-SNAPSHOT</version>
-	<name>cg-commons</name>
+	<name>cg-jcommons</name>
 	<url>https://github.com/claygregory/cg-jcommons</url>
 
 	<issueManagement>
@@ -15,7 +15,7 @@
 	</issueManagement>
 
 	<scm>
-		<url>https://github.com/claygregory/cg-java-commons</url>
+		<url>https://github.com/claygregory/cg-jcommons</url>
 		<connection>scm:git:git://github.com/claygregory/cg-jcommons.git</connection>
 		<developerConnection>scm:git:git@github.com:cg-commons/cg-jcommons.git</developerConnection>
 	</scm>
@@ -30,6 +30,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<github.global.server>github</github.global.server>
 	</properties>
 
 	<build>
