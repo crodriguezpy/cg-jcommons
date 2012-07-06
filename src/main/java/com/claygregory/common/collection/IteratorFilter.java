@@ -20,6 +20,14 @@ public class IteratorFilter<T> extends UnmodifiableIterator<T> {
 	
 	private T peek;
 	
+	/**
+	 * Provides a filtered view of wrapped Iterable based on Predicate. Iterators
+	 * provided by Iterable view are not modifiable.
+	 * 
+	 * @param itr an Iterable to wrap
+	 * @param predicate a Predicate to provide filtering
+	 * @return a filtered view of itr
+	 */
 	public static<T> Iterable<T> wrap( final Iterable<T> itr, final Predicate<? super T> predicate ) {
 		return new Iterable<T>( ) {
 			@Override
@@ -29,6 +37,13 @@ public class IteratorFilter<T> extends UnmodifiableIterator<T> {
 		};
 	}
 	
+	/**
+	 * Provides an unmodifiable filtered view of wrapped Iterator based on Predicate.
+	 * 
+	 * @param itr an Iterator to wrap
+	 * @param predicate a Predicate to provide filtering
+	 * @return a filtered view of itr
+	 */
 	public static<T> UnmodifiableIterator<T> wrap( Iterator<T> itr, Predicate<? super T> predicate ) {
 		return new IteratorFilter<T>( itr, predicate );
 	}

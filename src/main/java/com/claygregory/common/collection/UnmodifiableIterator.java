@@ -11,6 +11,9 @@ import java.util.Iterator;
  */
 public abstract class UnmodifiableIterator<T> implements Iterator<T> {
 
+	/**
+	 * Will throw an UnsupportedOperationException
+	 */
 	@Override
 	public void remove( ) {
 		throw new UnsupportedOperationException( );
