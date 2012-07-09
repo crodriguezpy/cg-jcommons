@@ -2,11 +2,24 @@ package com.claygregory.common.util;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Iterator;
 
+import com.claygregory.common.collection.UnmodifiableIterator;
+
+/**
+ * 
+ * Misc utility function for working with {@link java.util.Date} objects
+ * 
+ * @author Clay Gregory
+ *
+ */
 public final class DateUtil {
 
+	/**
+	 * Get a {@link java.util.Calendar} representation of provided Date
+	 * @param date the date to Calendar-ize
+	 * @return a new Calendar instance set to Date values
+	 */
 	public final static Calendar asCalendar( Date date ) {	
 		Calendar cal = Calendar.getInstance( );
 		cal.setTime( date );
@@ -14,30 +27,85 @@ public final class DateUtil {
 		return cal;
 	}
 	
-	public final static List<Date> dateList( Date start, Date end ) {
+	/**
+	 * Allows for iterating through a range of dates, stepping 1 day at a time. Note:
+	 * this auto selects date-rounding
+	 * 
+	 * @param start the start date, inclusive
+	 * @param end the end date, inclusive
+	 * @return a provider for date iteration
+	 */
+	public final static Iterable<Date> dateList( Date start, Date end ) {
 		return dateList( start, end, Calendar.DATE );
 	}
 	
-	public final static List<Date> dateList( Date start, Date end, int stepField ) {
+	/**
+	 * Allows for iterating through a range of dates, stepping one provided unit at a time. Note:
+	 * this auto selects date-rounding
+	 * 
+	 * @param start the start date, inclusive
+	 * @param end the end date, inclusive
+	 * @param stepField the {@link java.util.Calendar} field constant to step by
+	 * @return a provider for date iteration
+	 */
+	public final static Iterable<Date> dateList( Date start, Date end, int stepField ) {
 		return dateList( start, end, stepField, 1 );
 	}
 	
-	public final static List<Date> dateList( Date start, Date end, int stepField, int stepAmount ) {
+	/**
+	 * Allows for iterating through a range of dates, stepping a custom number of provided unit at a time. Note:
+	 * this auto selects date-rounding
+	 * 
+	 * 
+	 * @param start the start date, inclusive
+	 * @param end the end date, inclusive
+	 * @param stepField the {@link java.util.Calendar} field constant to step by
+	 * @param stepAmount the number of stepField units to increment at each step
+	 * @return a provider for date iteration
+	 */
+	public final static Iterable<Date> dateList( Date start, Date end, int stepField, int stepAmount ) {
 		return dateList( start, end, stepField, stepAmount, true );
 	}
 	
-	public final static List<Date> dateList( Date start, Date end, int stepField, int stepAmount, boolean roundToField ) {
+	/**
+	 * Allows for iterating through a range of dates, stepping a custom number of provided unit at a time. If
+	 * roundToField is true, the lower and upper bounds are rounded via {@link #floor(Date, int)} and {@link #ceil(Date, int)}
+	 * to the selected stepField, respectively.
+	 * 
+	 * @param start the start date, inclusive
+	 * @param end the end date, inclusive
+	 * @param stepField the {@link java.util.Calendar} field constant to step by
+	 * @param stepAmount the number of stepField units to increment at each step
+	 * @param roundToField should the start and end dates be interpreted to nearest full stepField unit?
+	 * @return a provider for date iteration
+	 */
+	public final static Iterable<Date> dateList( final Date start, final Date end, final int stepField, final int stepAmount, final boolean roundToField ) {
 		
-		Calendar baseCal = asCalendar( roundToField ? floor( start, stepField ) : start );
-		Calendar endCal = asCalendar( roundToField ? ceil( end, stepField ) : end );
-		
-		List<Date> list = new LinkedList<Date>( );
-		while ( baseCal.before( endCal ) ) {
-			list.add( baseCal.getTime( ) );
-			baseCal.add( stepField, stepAmount );
-		}
-		
-		return list;
+		return new Iterable<Date>( ) {
+
+			@Override
+			public Iterator<Date> iterator( ) {
+				
+				final Calendar baseCal = asCalendar( roundToField ? floor( start, stepField ) : start );
+				final Calendar endCal = asCalendar( roundToField ? ceil( end, stepField ) : end );
+				
+				return new UnmodifiableIterator<Date>( ) {
+
+					@Override
+					public boolean hasNext( ) {
+						return baseCal.before( endCal );
+					}
+
+					@Override
+					public Date next( ) {
+						Date d = baseCal.getTime( );
+						baseCal.add( stepField, stepAmount );
+						return d;
+					}
+				};
+			}
+			
+		};
 	}
 	
 	public final static Date addYear( Date date, int amount ) {
@@ -124,6 +192,14 @@ public final class DateUtil {
 		return setField( date, Calendar.MILLISECOND, millisecond );
 	}
 	
+	/**
+	 * Creates new Date at next full field step to given Date. All fields
+	 * of higher resolution than selected field are cleared.
+	 * 
+	 * @param date the Date to ceiling
+	 * @param field the Calendar field resolution at which we want to round
+	 * @return a new Date 
+	 */
 	public final static Date ceil( Date date, int field ) {	
 		Calendar cal = asCalendar( date );
 		boolean increment = false;
@@ -141,6 +217,14 @@ public final class DateUtil {
 		return cal.getTime( );
 	}
 	
+	/**
+	 * Creates new Date at lowest full field step to given Date. All fields
+	 * of higher resolution than selected field are cleared.
+	 * 
+	 * @param date the Date to floor
+	 * @param field the Calendar field resolution at which we want to round
+	 * @return a new Date 
+	 */
 	public final static Date floor( Date date, int field ) {	
 		Calendar cal = asCalendar( date );
 		for ( int i = Calendar.MILLISECOND; i > field; i-- )
