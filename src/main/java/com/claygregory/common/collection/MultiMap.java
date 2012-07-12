@@ -12,6 +12,6 @@ import java.util.Map;
  */
 public interface MultiMap<K,V> extends Map<K,List<V>> {
 
-	public List<V> put( K key, V value );
+	public List<V> put( K key, V... value );
 	
 }

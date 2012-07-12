@@ -1,8 +1,8 @@
 package com.claygregory.common.collection;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,8 +59,8 @@ public class HashMultiMap<K,V> implements MultiMap<K,V> {
 		return this.map.keySet( );
 	}
 	
-	public List<V> put( K key, V value ) {
-		return this.put( key, Collections.singletonList( value ) );
+	public List<V> put( K key, V... value ) {
+		return this.put( key, Arrays.asList( value ) );
 	}
 
 	@Override
